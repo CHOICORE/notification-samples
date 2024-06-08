@@ -34,7 +34,7 @@ public class DefaultPlaceholderRegistry implements PlaceholderRegistry {
 
     @Override
     public String getReplacement(String placeholder) {
-        return placeholders.get(placeholder);
+        return placeholders.get(determinePlaceholderName(placeholder));
     }
 
     @Override
