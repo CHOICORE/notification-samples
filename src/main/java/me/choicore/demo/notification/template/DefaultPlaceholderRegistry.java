@@ -16,13 +16,6 @@ public class DefaultPlaceholderRegistry implements PlaceholderRegistry {
         this(new DefaultPlaceholderFormatter());
     }
 
-    public void setPlaceholderFormatter(PlaceholderFormatter formatter) {
-        if (formatter == null) {
-            throw new IllegalArgumentException("formatter cannot be null");
-        }
-        this.formatter = formatter;
-    }
-
     private void registerPlaceholder(String placeholder, String replacement) {
         placeholders.put(determinePlaceholderName(placeholder), replacement);
     }
@@ -30,6 +23,17 @@ public class DefaultPlaceholderRegistry implements PlaceholderRegistry {
     @Override
     public void registerPlaceholder(Placeholder placeholder) {
         registerPlaceholder(placeholder.target(), placeholder.replacement());
+    }
+
+    @Override
+    public void registerPlaceholders(Placeholder... placeholders) {
+        if (placeholders == null) {
+            throw new IllegalArgumentException("placeholders cannot be null");
+        }
+
+        for (Placeholder placeholder : placeholders) {
+            registerPlaceholder(placeholder);
+        }
     }
 
     @Override
@@ -54,6 +58,13 @@ public class DefaultPlaceholderRegistry implements PlaceholderRegistry {
     @Override
     public PlaceholderFormatter getPlaceholderFormatter() {
         return this.formatter;
+    }
+
+    public void setPlaceholderFormatter(PlaceholderFormatter formatter) {
+        if (formatter == null) {
+            throw new IllegalArgumentException("formatter cannot be null");
+        }
+        this.formatter = formatter;
     }
 
     private String determinePlaceholderName(String placeholder) {
