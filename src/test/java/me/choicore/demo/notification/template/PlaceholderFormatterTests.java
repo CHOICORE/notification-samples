@@ -21,4 +21,13 @@ class PlaceholderFormatterTests {
         String template = "Hello, {name}!";
         assertThat(formatter.extractPlaceholders(template)).containsExactly("{name}");
     }
+
+    @Test
+    void t3() {
+        PlaceholderFormatter formatter = new DefaultPlaceholderFormatter();
+        formatter.setPrefix("${");
+        formatter.setSuffix("}");
+        String template = "Hello, ${name}!";
+        assertThat(formatter.extractPlaceholders(template)).containsExactly("${name}");
+    }
 }
