@@ -5,18 +5,23 @@ import org.junit.jupiter.api.Test;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-class PlaceholderReplacingTemplateTests {
-
+class PloaceholderReplacingRendererTests {
     @Test
     void t1() {
         PlaceholderRegistry registry = new DefaultPlaceholderRegistry();
         registry.registerPlaceholder(Placeholders.as("name", "홍길동"));
 
-        String content = "Hello, {name}!";
-        Template template = new PlaceholderReplacingTemplate(content, registry);
+        SubjectContentTemplate template = new SubjectContentTemplate(
+                "email-template",
+                "Hello, {name}!",
+                "Welcome, {name}! How are you?",
+                true);
 
-        String render = template.render();
-        assertThat(render).isEqualTo("Hello, 홍길동!");
+        Renderer renderer = new PloaceholderReplacingRenderer(template, registry);
+        SubjectContentTemplate render = (SubjectContentTemplate) renderer.render();
+        assertThat(render.getSubject()).isEqualTo("Hello, 홍길동!");
+        assertThat(render.getContent()).isEqualTo("Welcome, 홍길동! How are you?");
+        assertThat(render.hasPlaceholders()).isFalse();
     }
 
     @Test
@@ -24,9 +29,15 @@ class PlaceholderReplacingTemplateTests {
         PlaceholderRegistry registry = new DefaultPlaceholderRegistry();
         registry.registerPlaceholder(Placeholders.as("name", "홍길동"));
 
-        Template template = new PlaceholderReplacingTemplate("Hello, {name}!, {company}", registry);
+        ContentTemplate template = new ContentTemplate(
+                "default-template",
+                "Hello, {name}!, {company}",
+                TemplateType.PUSH,
+                true);
 
-        assertThatThrownBy(template::render)
+        Renderer render = new PloaceholderReplacingRenderer(template, registry);
+
+        assertThatThrownBy(render::render)
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining("{company}");
     }
@@ -47,10 +58,12 @@ class PlaceholderReplacingTemplateTests {
                 {link} 에서 확인하실 수 있습니다.
                 감사합니다.
                 """;
-        Template template = new PlaceholderReplacingTemplate(content, registry);
-        String render = template.render();
 
-        assertThat(render).isEqualTo("""
+        ContentTemplate template = new ContentTemplate("email-template", content, TemplateType.PUSH, true);
+        Renderer renderer = new PloaceholderReplacingRenderer(template, registry);
+        Template render = renderer.render();
+
+        assertThat(render.getContent()).isEqualTo("""
                 회원가입 안내
                 안녕하세요, 홍길동님!
                 저희 개발바닥 회원이 되신 것을 환영합니다.
@@ -59,7 +72,6 @@ class PlaceholderReplacingTemplateTests {
                 https://company.com 에서 확인하실 수 있습니다.
                 감사합니다.
                 """);
-
     }
 
     @Test
@@ -82,10 +94,12 @@ class PlaceholderReplacingTemplateTests {
                 #{link} 에서 확인하실 수 있습니다.
                 감사합니다.
                 """;
-        Template template = new PlaceholderReplacingTemplate(content, registry);
-        String render = template.render();
 
-        assertThat(render).isEqualTo("""
+        ContentTemplate template = new ContentTemplate("push-template", content, TemplateType.PUSH, true);
+        Renderer renderer = new PloaceholderReplacingRenderer(template, registry);
+        Template render = renderer.render();
+
+        assertThat(render.getContent()).isEqualTo("""
                 회원가입 안내
                 안녕하세요, 홍길동님!
                 저희 개발바닥 회원이 되신 것을 환영합니다.
