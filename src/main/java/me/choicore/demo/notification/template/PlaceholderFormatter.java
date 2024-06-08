@@ -1,11 +1,19 @@
 package me.choicore.demo.notification.template;
 
-public interface PlaceholderFormatter {
-    String prefix();
+import java.util.Set;
 
-    String suffix();
+public interface PlaceholderFormatter {
+    String getPrefix();
+
+    void setPrefix(String prefix);
+
+    String getSuffix();
+
+    void setSuffix(String suffix);
 
     default String format(String key) {
-        return prefix() + key + suffix();
+        return getPrefix() + key + getSuffix();
     }
+
+    Set<String> extractPlaceholders(String template);
 }

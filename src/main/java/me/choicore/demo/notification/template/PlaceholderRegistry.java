@@ -10,4 +10,8 @@ public interface PlaceholderRegistry {
     boolean isRegistered(String placeholder);
 
     List<Placeholder> getPlaceholders();
+
+    PlaceholderFormatter getPlaceholderFormatter();
+
+    void setPlaceholderFormatter(PlaceholderFormatter formatter);
 }

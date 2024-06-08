@@ -9,9 +9,16 @@ class PlaceholderFormatterTests {
     @Test
     void t1() {
         PlaceholderFormatter formatter = new DefaultPlaceholderFormatter();
-        String prefix = formatter.prefix();
-        String suffix = formatter.suffix();
+        String prefix = formatter.getPrefix();
+        String suffix = formatter.getSuffix();
         String target = "target";
         assertThat(formatter.format(target)).isEqualTo(prefix + target + suffix);
+    }
+
+    @Test
+    void t2() {
+        PlaceholderFormatter formatter = new DefaultPlaceholderFormatter();
+        String template = "Hello, {name}!";
+        assertThat(formatter.extractPlaceholders(template)).containsExactly("{name}");
     }
 }

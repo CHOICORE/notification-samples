@@ -51,6 +51,11 @@ public class DefaultPlaceholderRegistry implements PlaceholderRegistry {
                 .toList();
     }
 
+    @Override
+    public PlaceholderFormatter getPlaceholderFormatter() {
+        return this.formatter;
+    }
+
     private String determinePlaceholderName(String placeholder) {
         return formatter.format(placeholder);
     }

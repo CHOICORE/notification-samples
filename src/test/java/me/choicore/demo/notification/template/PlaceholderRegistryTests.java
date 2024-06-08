@@ -15,7 +15,7 @@ class PlaceholderRegistryTests {
         registry.registerPlaceholder(Placeholders.as("link", "https://company.com"));
 
         for (Placeholder placeholder : registry.getPlaceholders()) {
-            assertThat(placeholder.target()).startsWith(formatter.prefix()).endsWith(formatter.suffix());
+            assertThat(placeholder.target()).startsWith(formatter.getPrefix()).endsWith(formatter.getSuffix());
             assertThat(placeholder.replacement()).isNotNull();
         }
     }
