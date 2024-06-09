@@ -2,11 +2,11 @@ package me.choicore.demo.notification.template;
 
 import java.util.Set;
 
-public class PloaceholderReplacingRenderer implements Renderer {
+public class PlaceholderReplacingRenderer implements Renderer {
     private final Template template;
     private final PlaceholderRegistry registry;
 
-    public PloaceholderReplacingRenderer(Template template, PlaceholderRegistry registry) {
+    public PlaceholderReplacingRenderer(Template template, PlaceholderRegistry registry) {
         if (template == null) {
             throw new IllegalArgumentException("Template must not be null");
         }
@@ -56,9 +56,13 @@ public class PloaceholderReplacingRenderer implements Renderer {
     private void checkForUnresolvedPlaceholders(String template) {
         Set<String> unresolvedPlaceholders = getRequiredReplacingPlaceholders(template);
         if (!unresolvedPlaceholders.isEmpty()) {
-            throw new IllegalArgumentException(String.format(
-                    "The template contains unresolved placeholders: %s. " +
-                            "Please ensure all placeholders are registered in the PlaceholderRegistry.", unresolvedPlaceholders));
+            throw new IllegalArgumentException(
+                    String.format(
+                            "The template contains unresolved placeholders: %s. " +
+                                    "Please ensure all placeholders are registered in the PlaceholderRegistry.",
+                            unresolvedPlaceholders
+                    )
+            );
         }
     }
 

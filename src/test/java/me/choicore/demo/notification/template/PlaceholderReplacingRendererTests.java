@@ -18,7 +18,7 @@ class PlaceholderReplacingRendererTests {
                         .content("Welcome, {name}! How are you?")
                         .build();
 
-        Renderer renderer = new PloaceholderReplacingRenderer(template, registry);
+        Renderer renderer = new PlaceholderReplacingRenderer(template, registry);
         SubjectContentTemplate render = (SubjectContentTemplate) renderer.render();
         assertThat(render.getSubject()).isEqualTo("Hello, 홍길동!");
         assertThat(render.getContent()).isEqualTo("Welcome, 홍길동! How are you?");
@@ -35,7 +35,7 @@ class PlaceholderReplacingRendererTests {
                 .content("Hello, {name}!, {company}")
                 .build();
 
-        Renderer render = new PloaceholderReplacingRenderer(template, registry);
+        Renderer render = new PlaceholderReplacingRenderer(template, registry);
 
         assertThatThrownBy(render::render)
                 .isInstanceOf(IllegalArgumentException.class)
@@ -63,7 +63,7 @@ class PlaceholderReplacingRendererTests {
                 .name("email-template")
                 .content(content)
                 .build();
-        Renderer renderer = new PloaceholderReplacingRenderer(template, registry);
+        Renderer renderer = new PlaceholderReplacingRenderer(template, registry);
         Template render = renderer.render();
 
         assertThat(render.getContent()).isEqualTo("""
@@ -98,7 +98,7 @@ class PlaceholderReplacingRendererTests {
                 .name("push-template")
                 .content(content)
                 .build();
-        Renderer renderer = new PloaceholderReplacingRenderer(template, registry);
+        Renderer renderer = new PlaceholderReplacingRenderer(template, registry);
         Template render = renderer.render();
 
         assertThat(render.getContent()).isEqualTo("""
