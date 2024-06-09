@@ -11,11 +11,12 @@ class PlaceholderReplacingRendererTests {
         PlaceholderRegistry registry = new DefaultPlaceholderRegistry();
         registry.registerPlaceholder(Placeholders.as("name", "홍길동"));
 
-        SubjectContentTemplate template = new SubjectContentTemplate(
-                "email-template",
-                "Hello, {name}!",
-                "Welcome, {name}! How are you?",
-                true);
+        SubjectContentTemplate template =
+                SubjectContentTemplate.builder()
+                        .name("email-template")
+                        .subject("Hello, {name}!")
+                        .content("Welcome, {name}! How are you?")
+                        .build();
 
         Renderer renderer = new PloaceholderReplacingRenderer(template, registry);
         SubjectContentTemplate render = (SubjectContentTemplate) renderer.render();
@@ -29,10 +30,10 @@ class PlaceholderReplacingRendererTests {
         PlaceholderRegistry registry = new DefaultPlaceholderRegistry();
         registry.registerPlaceholder(Placeholders.as("name", "홍길동"));
 
-        ContentTemplate template = new ContentTemplate(
-                "default-template",
-                "Hello, {name}!, {company}",
-                true);
+        ContentTemplate template = ContentTemplate.builder()
+                .name("email-template")
+                .content("Hello, {name}!, {company}")
+                .build();
 
         Renderer render = new PloaceholderReplacingRenderer(template, registry);
 
@@ -58,7 +59,10 @@ class PlaceholderReplacingRendererTests {
                 감사합니다.
                 """;
 
-        ContentTemplate template = new ContentTemplate("email-template", content, true);
+        ContentTemplate template = ContentTemplate.builder()
+                .name("email-template")
+                .content(content)
+                .build();
         Renderer renderer = new PloaceholderReplacingRenderer(template, registry);
         Template render = renderer.render();
 
@@ -90,7 +94,10 @@ class PlaceholderReplacingRendererTests {
                 감사합니다.
                 """;
 
-        ContentTemplate template = new ContentTemplate("push-template", content, true);
+        ContentTemplate template = ContentTemplate.builder()
+                .name("push-template")
+                .content(content)
+                .build();
         Renderer renderer = new PloaceholderReplacingRenderer(template, registry);
         Template render = renderer.render();
 
