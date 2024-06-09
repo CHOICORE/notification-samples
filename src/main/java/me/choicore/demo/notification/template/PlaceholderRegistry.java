@@ -15,5 +15,5 @@ public interface PlaceholderRegistry {
 
     PlaceholderFormatter getPlaceholderFormatter();
 
-    void setPlaceholderFormatter(PlaceholderFormatter formatter);
+    PlaceholderDefinition getPlaceholderDefinition();
 }

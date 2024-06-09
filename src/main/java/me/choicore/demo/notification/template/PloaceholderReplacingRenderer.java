@@ -29,10 +29,19 @@ public class PloaceholderReplacingRenderer implements Renderer {
         if (template instanceof SubjectContentTemplate subjectContentTemplate) {
             String subject = replacePlaceholders(subjectContentTemplate.getSubject());
             String content = replacePlaceholders(subjectContentTemplate.getContent());
-            return new SubjectContentTemplate(subjectContentTemplate.getName(), subject, content, false);
+            return SubjectContentTemplate.builder()
+                    .placeholderDefinition(registry.getPlaceholderDefinition())
+                    .name(subjectContentTemplate.getName())
+                    .subject(subject)
+                    .content(content)
+                    .build();
         } else {
             String content = replacePlaceholders(template.getContent());
-            return new ContentTemplate(template.getName(), content, template.getType(), false);
+            return ContentTemplate.builder()
+                    .placeholderDefinition(registry.getPlaceholderDefinition())
+                    .name(template.getName())
+                    .content(content)
+                    .build();
         }
     }
 

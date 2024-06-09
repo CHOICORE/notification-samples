@@ -6,14 +6,15 @@ import java.util.Map;
 
 public class DefaultPlaceholderRegistry implements PlaceholderRegistry {
     private final Map<String, String> placeholders = new HashMap<>();
-    private PlaceholderFormatter formatter;
+    private final PlaceholderDefinition definition;
 
-    public DefaultPlaceholderRegistry(PlaceholderFormatter formatter) {
-        this.formatter = formatter;
+
+    public DefaultPlaceholderRegistry(PlaceholderDefinition definition) {
+        this.definition = definition;
     }
 
     public DefaultPlaceholderRegistry() {
-        this(new DefaultPlaceholderFormatter());
+        this(PlaceholderDefinitions.withDefault());
     }
 
     private void registerPlaceholder(String placeholder, String replacement) {
@@ -57,17 +58,15 @@ public class DefaultPlaceholderRegistry implements PlaceholderRegistry {
 
     @Override
     public PlaceholderFormatter getPlaceholderFormatter() {
-        return this.formatter;
+        return definition.getFormatter();
     }
 
-    public void setPlaceholderFormatter(PlaceholderFormatter formatter) {
-        if (formatter == null) {
-            throw new IllegalArgumentException("formatter cannot be null");
-        }
-        this.formatter = formatter;
+    @Override
+    public PlaceholderDefinition getPlaceholderDefinition() {
+        return this.definition;
     }
 
     private String determinePlaceholderName(String placeholder) {
-        return formatter.format(placeholder);
+        return definition.getFormatter().format(placeholder);
     }
 }

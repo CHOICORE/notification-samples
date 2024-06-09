@@ -1,5 +1,9 @@
 package me.choicore.demo.notification.template;
 
 public interface TemplateRepository {
-    Renderer getTemplate(String name);
+    Template getTemplateByName(String name);
+
+    Template getTemplateById(Long id);
+
+    Long addTemplate(Template template);
 }

@@ -1,8 +1,12 @@
 package me.choicore.demo.notification.template;
 
 import java.util.Set;
+import java.util.regex.Pattern;
 
 public interface PlaceholderFormatter {
+    String DEFAULT_PLACEHOLDER_PREFIX = "{";
+    String DEFAULT_PLACEHOLDER_SUFFIX = "}";
+
     String getPrefix();
 
     void setPrefix(String prefix);
@@ -16,4 +20,8 @@ public interface PlaceholderFormatter {
     }
 
     Set<String> extractPlaceholders(String template);
+
+    Pattern getPlaceholderPattern();
+
+    boolean hasPlaceholders(String template);
 }

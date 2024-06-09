@@ -5,7 +5,5 @@ public interface Template {
 
     String getContent();
 
-    TemplateType getType();
-
     boolean hasPlaceholders();
 }

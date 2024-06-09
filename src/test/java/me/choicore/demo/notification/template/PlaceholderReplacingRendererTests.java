@@ -5,7 +5,7 @@ import org.junit.jupiter.api.Test;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-class PloaceholderReplacingRendererTests {
+class PlaceholderReplacingRendererTests {
     @Test
     void t1() {
         PlaceholderRegistry registry = new DefaultPlaceholderRegistry();
@@ -32,7 +32,6 @@ class PloaceholderReplacingRendererTests {
         ContentTemplate template = new ContentTemplate(
                 "default-template",
                 "Hello, {name}!, {company}",
-                TemplateType.PUSH,
                 true);
 
         Renderer render = new PloaceholderReplacingRenderer(template, registry);
@@ -59,7 +58,7 @@ class PloaceholderReplacingRendererTests {
                 감사합니다.
                 """;
 
-        ContentTemplate template = new ContentTemplate("email-template", content, TemplateType.PUSH, true);
+        ContentTemplate template = new ContentTemplate("email-template", content, true);
         Renderer renderer = new PloaceholderReplacingRenderer(template, registry);
         Template render = renderer.render();
 
@@ -76,11 +75,7 @@ class PloaceholderReplacingRendererTests {
 
     @Test
     void t4() {
-        PlaceholderFormatter formatter = new DefaultPlaceholderFormatter();
-        formatter.setPrefix("#{");
-        formatter.setSuffix("}");
-
-        PlaceholderRegistry registry = new DefaultPlaceholderRegistry(formatter);
+        PlaceholderRegistry registry = new DefaultPlaceholderRegistry(new PlaceholderDefinition("#{", "}"));
         registry.registerPlaceholder(Placeholders.personName("홍길동"));
         registry.registerPlaceholder(Placeholders.companyName("개발바닥"));
         registry.registerPlaceholder(Placeholders.as("link", "https://company.com"));
@@ -95,7 +90,7 @@ class PloaceholderReplacingRendererTests {
                 감사합니다.
                 """;
 
-        ContentTemplate template = new ContentTemplate("push-template", content, TemplateType.PUSH, true);
+        ContentTemplate template = new ContentTemplate("push-template", content, true);
         Renderer renderer = new PloaceholderReplacingRenderer(template, registry);
         Template render = renderer.render();
 

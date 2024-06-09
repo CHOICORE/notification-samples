@@ -7,23 +7,23 @@ import static org.assertj.core.api.Assertions.assertThat;
 class PlaceholderRegistryTests {
     @Test
     void t1() {
-        PlaceholderFormatter formatter = new DefaultPlaceholderFormatter();
-        PlaceholderRegistry registry = new DefaultPlaceholderRegistry(formatter);
+        PlaceholderDefinition definition = PlaceholderDefinitions.withDefault();
+        PlaceholderRegistry registry = new DefaultPlaceholderRegistry(definition);
 
         registry.registerPlaceholder(Placeholders.personName("홍길동"));
         registry.registerPlaceholder(Placeholders.companyName("개발바닥"));
         registry.registerPlaceholder(Placeholders.as("link", "https://company.com"));
 
         for (Placeholder placeholder : registry.getPlaceholders()) {
-            assertThat(placeholder.target()).startsWith(formatter.getPrefix()).endsWith(formatter.getSuffix());
+            assertThat(placeholder.target()).startsWith(definition.getStartWith()).endsWith(definition.getEndWith());
             assertThat(placeholder.replacement()).isNotNull();
         }
     }
 
     @Test
     void t2() {
-        PlaceholderFormatter formatter = new DefaultPlaceholderFormatter();
-        PlaceholderRegistry registry = new DefaultPlaceholderRegistry(formatter);
+        PlaceholderDefinition definition = PlaceholderDefinitions.withDefault();
+        PlaceholderRegistry registry = new DefaultPlaceholderRegistry(definition);
 
         registry.registerPlaceholder(Placeholders.personName("홍길동"));
         registry.registerPlaceholder(Placeholders.companyName("개발바닥"));
