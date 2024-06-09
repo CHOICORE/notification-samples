@@ -17,9 +17,8 @@ class SubjectContentTemplateBuilderTests {
     @Test
     void t2() {
         String templateName = "welcome";
-        PlaceholderFormatter placeholderFormatter = new DefaultPlaceholderFormatter();
-        placeholderFormatter.setPrefix("#{");
-        placeholderFormatter.setSuffix("}");
+        PlaceholderFormatter placeholderFormatter = new DefaultPlaceholderFormatter("#{", "}");
+
         SubjectContentTemplate template = SubjectContentTemplate.builder()
                 .placeholderDefinition(new PlaceholderDefinition(placeholderFormatter))
                 .name(templateName)

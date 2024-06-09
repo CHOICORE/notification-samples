@@ -9,11 +9,7 @@ public interface PlaceholderFormatter {
 
     String getPrefix();
 
-    void setPrefix(String prefix);
-
     String getSuffix();
-
-    void setSuffix(String suffix);
 
     default String format(String key) {
         return getPrefix() + key + getSuffix();

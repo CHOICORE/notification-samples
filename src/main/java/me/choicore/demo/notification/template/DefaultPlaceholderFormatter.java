@@ -24,25 +24,10 @@ public class DefaultPlaceholderFormatter implements PlaceholderFormatter, Placeh
     }
 
     @Override
-    public void setPrefix(String prefix) {
-        if (prefix == null || prefix.isBlank()) {
-            throw new IllegalArgumentException("prefix cannot be null");
-        }
-        this.prefix = prefix;
-    }
-
-    @Override
     public String getSuffix() {
         return suffix;
     }
 
-    @Override
-    public void setSuffix(String suffix) {
-        if (suffix == null || suffix.isBlank()) {
-            throw new IllegalArgumentException("suffix cannot be null");
-        }
-        this.suffix = suffix;
-    }
 
     @Override
     public Set<String> extractPlaceholders(String template) {
