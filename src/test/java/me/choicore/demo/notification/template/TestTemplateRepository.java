@@ -4,7 +4,7 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicLong;
 
-public class TemplateRepositoryImpl implements TemplateRepository {
+public class TestTemplateRepository implements TemplateRepository {
     private final Map<Long, Template> database = new ConcurrentHashMap<>();
     private final AtomicLong sequence = new AtomicLong(1);
 

@@ -5,7 +5,6 @@ import org.junit.jupiter.api.Test;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class PlaceholderFormatterTests {
-
     @Test
     void t1() {
         PlaceholderFormatter formatter = new DefaultPlaceholderFormatter();

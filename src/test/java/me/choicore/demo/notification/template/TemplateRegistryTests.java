@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test;
 class TemplateRegistryTests {
     @Test
     void t1() {
-        TemplateRegistry registry = new SimpleTemplateRegistry(new TemplateRepositoryImpl());
+        TemplateRegistry registry = new SimpleTemplateRegistry(new TestTemplateRepository());
 
         SubjectContentTemplate template = SubjectContentTemplate.builder()
                 .subject("Welcome to {company}!")
