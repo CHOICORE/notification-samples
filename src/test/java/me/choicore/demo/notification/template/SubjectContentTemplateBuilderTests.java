@@ -2,6 +2,8 @@ package me.choicore.demo.notification.template;
 
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.Resource;
 
 class SubjectContentTemplateBuilderTests {
     @Test
@@ -60,6 +62,20 @@ class SubjectContentTemplateBuilderTests {
                         .name("welcome")
                         .subject("Hi {name} Welcome to {company}!")
                         .content("Hello, {name}! Welcome to {company}!")
+                        .build()
+                )
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessageContaining("Invalid placeholder");
+    }
+
+    @Test
+    void t6() {
+        Resource resource = new ClassPathResource("/templates/notification/welcome-template.html");
+        Assertions.assertThatThrownBy(() -> SubjectContentTemplate.builder()
+                        .placeholderDefinition(PlaceholderDefinitions.create("#{", "}"))
+                        .name("welcome")
+                        .subject("Hi {name} Welcome to {company}!")
+                        .content(resource.getFile())
                         .build()
                 )
                 .isInstanceOf(IllegalArgumentException.class)

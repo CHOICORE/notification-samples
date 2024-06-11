@@ -4,6 +4,9 @@ import jakarta.annotation.Nonnull;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 
+import java.io.File;
+import java.nio.file.Path;
+
 @Slf4j
 @Getter
 public class SubjectContentTemplate extends ContentTemplate {
@@ -45,6 +48,16 @@ public class SubjectContentTemplate extends ContentTemplate {
         @Override
         public SubjectContentTemplateBuilder content(String content) {
             return (SubjectContentTemplateBuilder) super.content(content);
+        }
+
+        @Override
+        public SubjectContentTemplateBuilder content(Path path) {
+            return (SubjectContentTemplateBuilder) super.content(path);
+        }
+
+        @Override
+        public SubjectContentTemplateBuilder content(File file) {
+            return this.content(file.toPath());
         }
 
         @Override

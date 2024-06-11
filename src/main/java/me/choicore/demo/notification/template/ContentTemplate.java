@@ -2,6 +2,13 @@ package me.choicore.demo.notification.template;
 
 import jakarta.annotation.Nonnull;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.util.stream.Collectors;
+
 public class ContentTemplate implements Template {
     private final String name;
     private final String content;
@@ -54,6 +61,19 @@ public class ContentTemplate implements Template {
         public ContentTemplateBuilder content(String content) {
             this.content = content;
             return this;
+        }
+
+        public ContentTemplateBuilder content(Path path) {
+            try (BufferedReader bufferedReader = Files.newBufferedReader(path)) {
+                this.content = bufferedReader.lines().collect(Collectors.joining("\n"));
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+            return this;
+        }
+
+        public ContentTemplateBuilder content(File file) {
+            return content(file.toPath());
         }
 
 

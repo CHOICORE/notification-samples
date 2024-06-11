@@ -1,6 +1,7 @@
 package me.choicore.demo.notification.template;
 
 import org.junit.jupiter.api.Test;
+import org.springframework.core.io.ClassPathResource;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -110,5 +111,38 @@ class PlaceholderReplacingRendererTests {
                 https://company.com 에서 확인하실 수 있습니다.
                 감사합니다.
                 """);
+    }
+
+    @Test
+    void t5() throws Exception {
+        PlaceholderRegistry registry = new DefaultPlaceholderRegistry(new PlaceholderDefinition("#{", "}"));
+        registry.registerPlaceholder(Placeholders.personName("홍길동"));
+        registry.registerPlaceholder(Placeholders.companyName("개같이 코딩"));
+        registry.registerPlaceholder(Placeholders.as("link", "https://company.com"));
+
+        ClassPathResource resource = new ClassPathResource("templates/notification/welcome-template.html");
+
+        ContentTemplate template = ContentTemplate.builder()
+                .name("push-template")
+                .content(resource.getFile())
+                .build();
+        Renderer renderer = new PlaceholderReplacingRenderer(template, registry);
+        Template render = renderer.render();
+
+        assertThat(render.getContent()).isEqualTo("""
+                <!DOCTYPE html>
+                <html lang="kr">
+                <head>
+                    <meta charset="UTF-8">
+                    <title>회원가입 환영 메시지</title>
+                </head>
+                <body>
+                <h2>회원가입 환영 메시지</h2>
+                <p>안녕하세요, 홍길동님!</p>
+                <p>저희 개같이 코딩 회원이 되신 것을 환영합니다.</p>
+                <p><a href="https://company.com">회원 혜택 보러 가기</a></p>
+                </body>
+                </html>
+                """.strip());
     }
 }
