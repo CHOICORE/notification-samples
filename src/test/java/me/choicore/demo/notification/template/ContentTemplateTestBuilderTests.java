@@ -59,7 +59,6 @@ class ContentTemplateTestBuilderTests {
         assertThatThrownBy(() -> ContentTemplate.builder()
                 .placeholderDefinition(PlaceholderDefinitions.create("#{", "}"))
                 .name("welcome")
-
                 .content("Hello, {name}! Welcome to {company}!")
                 .build()
         )
@@ -75,7 +74,6 @@ class ContentTemplateTestBuilderTests {
                 .name("welcome")
                 .content(resource.getFile())
                 .build();
-
         assertThat(template.hasPlaceholders()).isTrue();
     }
 }

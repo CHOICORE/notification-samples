@@ -70,7 +70,7 @@ public class DefaultPlaceholderValidator implements PlaceholderValidator {
             String format = """
                     Invalid placeholder '%s' detected in the template. Please use the correct format. Instead of the current prefix and suffix, use prefix '%s' and suffix '%s' respectively.
                     """;
-            throw new IllegalArgumentException(format.formatted(String.join(",", similarFormattedPlaceholders), formatter.getPrefix(), formatter.getSuffix()));
+            throw new IllegalArgumentException(format.formatted(String.join(", ", similarFormattedPlaceholders), formatter.getPrefix(), formatter.getSuffix()));
         }
     }
 
